@@ -1,0 +1,26 @@
+base_information:
+  -admin: true
+  -name: Igor
+  -age: 37
+  -abilities: ["fast learning", "ambitious", "perfect memory"]
+  -place of living: Los Angeles
+  -pets: ["cat", "dog"]
+
+Abilities:
+  - fast learning:
+    -grade: 5
+    -description: |
+      Данный навык характеризует Игоря как человека,
+      которого можно обучить чему-либо за короткий промежуток времени
+
+Place of living: 
+  -Country: USA
+  -City: Los Angeles
+  -Street: Mos Avenue
+  -House number: 25
+  -Apartment number: 937
+
+Pets:
+  -name: cat
+  -breed: scotland  
+  -can say "meoow": yes
