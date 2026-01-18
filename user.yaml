@@ -1,31 +1,32 @@
 user:
-  -admin: true
-  -name: Igor
-  -post: CISO
-  -age: 37
-  -abilities:
-    -fast learning:
-      -grade: 5
-      -description: |
+  admin: true
+  name: Igor
+  post: CISO
+  age: 37
+
+  abilities:
+    - name: fast_learning
+      grade: 5
+      description: |
         Данный навык характеризует Игоря как человека,
         которого можно обучить чему-либо за короткий промежуток времени
-    -ambitous:
-      -grade: 5
-      -description: |
-        Данный навык позволет Игорю добиваться
+    - name: ambitious
+      grade: 5
+      description: |
+        Данный навык позволяет Игорю добиваться
         больших целей, чем остальные люди
-  -Place of living: 
-    -Country: USA
-    -City: Los Angeles
-    -Street: Mos Avenue
-    -House number: 25
-    -Apartment number: 937
-  -Pets:
-    -Cat:
-      -name: Vasya
-      -breed: scotland  
-      -can say "meoow": yes
-    -Dog:
-      -name: Teddy
-      -breed: german shepherd
-      -can say "meoow": no
+
+  place_of_living:
+    country: USA
+    city: Los Angeles
+    street: Mos Avenue
+    house_number: 25
+    apartment_number: 937
+
+  pets:
+    - name: Vasya
+      breed: scotland
+      can_say_meoow: true
+    - name: Teddy
+      breed: german shepherd
+      can_say_meoow: false
