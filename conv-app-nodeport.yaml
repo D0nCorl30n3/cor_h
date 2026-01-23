@@ -6,7 +6,7 @@ spec:
   type: NodePort
   ports:
     - port: 3000
-      targetPort: 80
-      NodePort: 31201
+      targetPort: 3000
+      nodePort: 31201
   selector:
     environment: production
