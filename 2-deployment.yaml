@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conv-app-deploymetn
+spec:
+  replicas: 1
+  selector:
+    matchlabels:
+      environment: production
+  template:
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: conv-app
+      labels:
+        environment: production
+    spec:
+      containers:
+        - name: conv-app
+          image: antonlarichev/conv-app:latest
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
