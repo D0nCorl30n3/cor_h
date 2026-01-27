@@ -1,16 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: conv-app-deploymetn
+  name: conv-app-deployment
 spec:
   replicas: 1
   selector:
-    matchlabels:
+    matchLabels:
       environment: production
   template:
-    apiVersion: v1
-    kind: Pod
-    metadata:
+      metadata:
       name: conv-app
       labels:
         environment: production
