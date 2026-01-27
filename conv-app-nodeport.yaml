@@ -1,0 +1,12 @@
+ApiVersion: v1
+Kind: Service
+metadata:
+  name: conv-app-nodeport
+spec:
+  type: NodePort
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort: 31201
+  selector:
+    environment: production
