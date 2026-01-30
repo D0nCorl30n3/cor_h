@@ -9,16 +9,16 @@ spec:
       environment: production
   template:
       metadata:
-      name: conv-app
-      labels:
-        environment: production
-    spec:
-      containers:
-        - name: conv-app
-          image: antonlarichev/conv-app:latest
-          ports:
-            - containerPort: 80
-          resources:
-            limits:
-              memory: "128Mi"
-              cpu: "500m"
+        name: conv-app
+        labels:
+          environment: production
+      spec:
+        containers:
+          - name: conv-app
+            image: antonlarichev/conv-app:1.2
+            ports:
+              - containerPort: 80
+            resources:
+              limits:
+                memory: "512Mi"
+                cpu: "500m"
