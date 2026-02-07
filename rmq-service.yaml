@@ -6,6 +6,10 @@ spec:
   selector:
     component: rmq  # Это ДОЛЖНО совпадать с labels вашего RabbitMQ Pod
   ports:
+  - port: 5672
+    targetPort: 5672
+    name: amqp
   - port: 15672
-    protocol: TCP
+    targetPort: 15672
+    name: management
   type: ClusterIP

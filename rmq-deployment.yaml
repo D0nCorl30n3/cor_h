@@ -37,12 +37,12 @@ spec:
             memory: "1Gi"
             cpu: "500m"
         volumeMounts:
-        - name: rabbitmq
+        - name: rabbitmq-data
           mountPath: /var/lib/rabbitmq
-          subpath: rabbitmq
+          subPath: rabbitmq
       volumes:
       - name: rabbitmq-data
         persistentVolumeClaim: 
-          claimName: ramq-pvc
+          claimName: rmq-pvc
 
       
