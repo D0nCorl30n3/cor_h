@@ -15,14 +15,23 @@ spec:
     spec:
       containers:
       - name: rmq
-        image: rabbitmq:3.9-management
+        image: rabbitmq:3.9
         ports:
-        - containerPort: 15672
+        - containerPort: 5672   # 1. Документирует, что контейнер использует порт 5672
+          name: amqp           # 2. Даёт имя для удобства
+        - containerPort: 15672  # 3. Помогает инструментам (kubectl port-forward и др.)
+          name: management
         env:
         - name: SEED_USERNAME
-          value: conv
+          valueFrom:
+            secretKeyRef:
+              name: rmq-secret
+              key: SEED_USERNAME
         - name: SEED_USER_PASSWORD
-          value: conv
+          valueFrom:
+            secretKeyRef:
+              name: rmq-secret
+              key: SEED_USER_PASSWORD
         resources:
           requests: 
             memory: "1Gi"
@@ -32,8 +41,8 @@ spec:
           mountPath: /var/lib/rabbitmq
           subpath: rabbitmq
       volumes:
-      - name: rabbitmq
+      - name: rabbitmq-data
         persistentVolumeClaim: 
-          claimName: rmq-pvc
+          claimName: ramq-pvc
 
       
