@@ -1,10 +1,10 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: Deployment 
 metadata:
   name: conv-app-deployment
 spec:
   replicas: 1
-  selector:
+  selector: 
     matchLabels:
       environment: production
   template:
@@ -14,11 +14,13 @@ spec:
     spec:
       containers:
         - name: conv-app
-          image: antonlarichev/conv-app:1.2
-          ports:
+          image: antonlarichev/conv-app:latest
+          ports: 
             - containerPort: 80
           resources:
             limits:
               memory: "128Mi"
-              cpu: "100m"
-
+              cpu: "500m"
+          envFrom:
+          - configMapRef:
+              name: app-conv-configmap
