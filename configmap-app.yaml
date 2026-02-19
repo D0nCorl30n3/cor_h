@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-conv-configmap
+data:
+  VITE_DOMAIN: http://conv.test/api
+  AMQP_EXCHANGE: conv
+  AMQP_USER: conv
+  AMQP_PASSWORD: conv
+  AMQP_HOSTNAME: conv
+  AMQP_QUEUE: conv

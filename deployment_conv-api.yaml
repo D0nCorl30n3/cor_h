@@ -1,8 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: deployment_conv-api
+  name: deployment-conv-api
 spec:
+  replicas: 1
   selector:
     matchLabels:
       environment: api
@@ -12,7 +13,7 @@ spec:
         environment: api
     spec:
       containers:
-      - name: conv_api
+      - name: conv-api
         image: antonlarichev/conv-api:1.0
         ports:
         - containerPort: 3000
@@ -45,9 +46,19 @@ spec:
         volumeMounts:
           - name: api-data
             mountPath: /opt/app/uploads
+            readOnly: true
+        livenessProbe:
+          exec:
+            command:
+              - curl 
+              - --fail
+              - http://localhost:3000/api
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          failureThreshold: 2
         resources:
           limits:
-            memory: "128Mi"
+            memory: "256Mi"
             cpu: "100m"
       volumes:
       - name: api-data
