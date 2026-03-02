@@ -1,0 +1,79 @@
+app:
+  name: conv-app
+  replicaCount: 1
+  version: 1.2
+  image: antonlarichev/conv-app
+  environment: production
+  port: 80
+  limits:
+    memory: "128Mi"
+    cpu: "500m"
+  data:  
+    VITE_DOMAIN: http://conv.test/api
+    AMQP_EXCHANGE: conv
+    AMQP_USER: conv
+    AMQP_PASSWORD: conv
+    AMQP_HOSTNAME: conv
+    AMQP_QUEUE: conv
+
+api:
+  name: conv-api
+  replicaCount: 1
+  version: 1.0
+  image: antonlarichev/conv-api
+  environment: api
+  port: 3000
+  limits:
+    memory: "500Mi"
+    cpu: "200m"
+  envs: 
+    - DATABASE_URL
+
+postgres:
+  replicaCount: 1
+  name: postgres
+  port: 5432
+  image: postgres
+  version: 16.0
+  component: database
+  limits:
+    memory: "500Mi"
+    cpu: "200m"
+  envs: 
+    - POSTGRES_DB
+    - POSTGRES_USER
+    - POSTGRES_PASSWORD 
+
+database:
+  user: conv
+  password: conv
+  db: conv
+  host: postgres-clusterip
+
+converter:
+  name: converter
+  part: converter
+  image: antonlarichev/conv-service
+  version: 1.0
+  limits:
+    memory: "128Mi"
+    cpu: "500m"
+  port: 3333
+
+rabbitmq:
+  name: rmq 
+  component: rmq 
+  port1: 
+    value: 5672
+    name: amqp    
+  port2: 
+    value: 15672
+    name: management
+  image: rabbitmq
+  version: 3.9
+  envs: 
+    - SEED_USERNAME
+    - SEED_USER_PASSWORD
+  secret: 
+    user: conv
+    password: conv

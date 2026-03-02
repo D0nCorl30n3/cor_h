@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "deployment_{{ .Values.api.name }}"
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.api.name }}
+  template:
+    metadata:
+      labels:
+        environment: {{ .Values.api.environment }}
+    spec:
+      containers:
+      - name: {{ .Values.api.name }}
+        image: "{{ .Values.api.image }}:{{ .Values.api.version }}"
+        ports:
+        - containerPort: {{ .Values.api.port }}
+        env: 
+          {{- range .Values.api.envs }}
+          {{- $data := dict "name" $.Values.api.name "env" . }}
+          {{- include "env.template" $data | indent 12 }}
+          {{- end }}
+        volumeMounts:
+          - name: api-data
+            mountPath: /opt/app/uploads
+        resources:
+          limits: {{ .Values.api.limits | toYaml | nindent 14 }}
+      volumes:
+      - name: api-data
+        persistentVolumeClaim:
+          claimName: api-pvc
