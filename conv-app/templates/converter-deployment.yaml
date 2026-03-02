@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.converter.name }}
+spec:
+  selector:
+    matchLabels:
+      part: {{ .Values.converter.part }}
+  template:
+    metadata:
+      labels:
+        part: {{ .Values.converter.part }}
+    spec:
+      containers:
+      - name: {{ .Values.converter.name }}
+        image: "{{ .Values.converter.image }}:{{ .Values.converter.version }}"
+        resources:
+          limits: {{ .Values.converter.limits | toYaml | nintent 14 }}
+        ports:
+        - containerPort: {{ .Values.converter.port }}

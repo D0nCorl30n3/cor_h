@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.rabbitmq.name }}-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels: 
+      component: {{ .Values.rabbitmq.component }}
+  template:
+    metadata:
+      name: {{ .Values.rabbitmq.name }}
+      labels:
+        component: {{ .Values.rabbitmq.component }}
+    spec:
+      containers:
+      - name: {{ .Values.rabbitmq.name }}
+        image: "{{ .Values.rabbitmq.image }}:{{ .Values.rabbitmq.version }}"
+        ports:
+        - containerPort: {{ .Values.rabbitmq.port1.value }}   # 1. Документирует, что контейнер использует порт 5672
+          name: {{ .Values.rabbitmq.port1.name }}           # 2. Даёт имя для удобства
+        - containerPort: {{ .Values.rabbitmq.port2.value }}  # 3. Помогает инструментам (kubectl port-forward и др.)
+          name: {{ .Values.rabbitmq.port2.name }}
+        env: 
+          {{- range .Values.rabbitmq.envs }}
+          {{- $data := dict "name" $.Values.rabbitmq.name "env" . }}
+          {{- include "env.template" $data | indent 12 }}
+          {{- end }}
+        resources:
+          requests: 
+            memory: "1Gi"
+            cpu: "500m"
+        volumeMounts:
+        - name: rabbitmq-data
+          mountPath: /var/lib/rabbitmq
+          subPath: rabbitmq
+      volumes:
+      - name: rabbitmq-data
+        persistentVolumeClaim: 
+          claimName: rmq-pvc

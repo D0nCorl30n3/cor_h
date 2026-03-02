@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.rabbitmq.name }}-service
+spec:
+  selector:
+    component: {{ .Values.rabbitmq.component }}
+  ports:
+  - port: {{ .Values.rabbitmq.port1.value }}
+    targetPort: {{ .Values.rabbitmq.port1.value }}
+    name: {{ .Values.rabbitmq.port1.name }}
+  - port: {{ .Values.rabbitmq.port2.value }}
+    targetPort: {{ .Values.rabbitmq.port2.value }}
+    name: {{ .Values.rabbitmq.port2.name }}
+  type: ClusterIP

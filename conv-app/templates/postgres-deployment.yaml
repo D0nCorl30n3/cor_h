@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.postgres.name }}-deployment
+spec:
+  replicas: {{ .Values.postgres.replicaCount }}
+  selector:
+    matchLabels:  # ← Исправлено: matchLabels (с большой L)
+      component: {{ .Values.postgres.component }}
+  template:
+    metadata:
+      name: {{ .Values.postgres.name }}
+      labels:
+        component: {{ .Values.postgres.component }}
+    spec:
+      containers:
+      - name: {{ .Values.postgres.name }}  # ← ДОБАВЛЕН name и дефис!
+        image: "{{ .Values.postgres.image }}:{{ .Values.postgres.version }}"
+        ports:
+        - containerPort: {{ .Values.postgres.port }}
+        env: 
+          {{- range .Values.postgres.envs }}
+          {{- $data := dict "name" $.Values.postgres.name "env" . }}
+          {{- include "env.template" $data | indent 12 }}
+          {{- end }}
+        resources:  # ← Исправлена структура resources
+          requests:
+            memory: "512Mi"
+            cpu: "300m"
+          limits: {{ .Values.app.limits | toYaml | nintent 14 }}
+        volumeMounts:
+        - name: {{ .Values.postgres.name }}-data
+          mountPath: /var/lib/postgresql/data  # ← Исправлен путь
+          subPath: postgres
+      volumes:
+      - name: {{ .Values.postgres.name }}-data
+        persistentVolumeClaim:  # ← Исправлено: строчные буквы
+          claimName: {{ .Values.postgres.name }}-pvc
