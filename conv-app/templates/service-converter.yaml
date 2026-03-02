@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Value.converter.name }}-service
+  name: {{ .Values.converter.name }}-service
 spec:
   type: ClusterIP
   ports:
