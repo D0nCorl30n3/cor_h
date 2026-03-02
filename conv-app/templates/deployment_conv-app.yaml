@@ -13,12 +13,12 @@ spec:
         environment: {{ .Values.app.environment }}
     spec:
       containers:
-        - name: conv-app
+        - name: {{ .Values.app.name }}
           image: "{{ .Values.app.image }}:{{ .Values.app.version }}"
           ports: 
             - containerPort: {{ .Values.app.port}}
           resources:
-            limits: {{ .Values.app.limits | toYaml | nintent 14 }}
+            limits: {{ .Values.app.limits | toYaml | nindent 14 }}
           envFrom:
           - configMapRef:
-              name: app-conv-configmap
+              name: {{ .Values.app.name }}-configmap

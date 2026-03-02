@@ -25,7 +25,7 @@ spec:
           - name: api-data
             mountPath: /opt/app/uploads
         resources:
-          limits: {{ .Values.api.limits | toYaml | nintent 14 }}
+          limits: {{ .Values.api.limits | toYaml | nindent 14 }}
       volumes:
       - name: api-data
         persistentVolumeClaim:

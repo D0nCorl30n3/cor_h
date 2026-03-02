@@ -27,7 +27,7 @@ spec:
           requests:
             memory: "512Mi"
             cpu: "300m"
-          limits: {{ .Values.app.limits | toYaml | nintent 14 }}
+          limits: {{ .Values.app.limits | toYaml | nindent 14 }}
         volumeMounts:
         - name: {{ .Values.postgres.name }}-data
           mountPath: /var/lib/postgresql/data  # ← Исправлен путь

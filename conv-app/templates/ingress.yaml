@@ -14,13 +14,13 @@ spec:
         path: "/"
         backend:
           service:
-            name: conv-app-clusterip
+            name: {{ .Values.app.name }}-clusterip
             port: 
               number: 80
       - pathType: Prefix
         path: "/api"
         backend:
           service:
-            name: conv-api
+            name: {{ .Values.api.name }}-clusterip
             port: 
               number: 3000

@@ -15,6 +15,6 @@ spec:
       - name: {{ .Values.converter.name }}
         image: "{{ .Values.converter.image }}:{{ .Values.converter.version }}"
         resources:
-          limits: {{ .Values.converter.limits | toYaml | nintent 14 }}
+          limits: {{ .Values.converter.limits | toYaml | nindent 14 }}
         ports:
         - containerPort: {{ .Values.converter.port }}
